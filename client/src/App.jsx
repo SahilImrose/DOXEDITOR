@@ -38,6 +38,7 @@ function App() {
         }
 
 
+
         {
           (loggedIn === true || loggedIn === false) && (
             <Route path="/view" exact component={SlateEditor} />
@@ -84,7 +85,6 @@ function App() {
         }
 
       </div>
-
     </div>
   )
 }

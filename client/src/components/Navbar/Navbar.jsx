@@ -17,7 +17,7 @@ const Navbar = () => {
 
     async function getNotificationsLength() {
         try {
-            const response = await axios.get('/api/users/notifications')
+            const response = await axios.get('https://docxserver.onrender.com/api/users/notifications')
             setNotificationsArrayLength(response.data.notifications.length)
 
         } catch (err) {

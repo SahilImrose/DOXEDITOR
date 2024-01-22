@@ -27,7 +27,7 @@ const Permission = (props) => {
 
         try {
             buttonRef.current.disabled = true
-            const response = await axios.post(`/api/users/notifications/requestAccess`, {
+            const response = await axios.post(`https://docxserver.onrender.com/api/users/notifications/requestAccess`, {
                 docId
             })
 

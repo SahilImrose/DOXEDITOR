@@ -42,7 +42,7 @@ const Notifications = () => {
  
         if (loggedIn) {
             try {
-                const response = await axios.get('/api/users/notifications')
+                const response = await axios.get('https://docxserver.onrender.com/api/users/notifications')
                 //console.log(response.data)
                 setNotificationsArray(response.data.notifications)
                 setLoading(false)
@@ -83,14 +83,14 @@ const Notifications = () => {
 
             try {
                 setBtnDis(true)
-                const response = await axios.post(`/api/users/${docId}`, {
+                const response = await axios.post(`https://docxserver.onrender.com/api/users/${docId}`, {
                     senderId: senderId
                 })
 
                 //console.log(response.data)
 
                 if (response.data.status === "success") {
-                    const response = await axios.delete(`/api/notifications/${notificationId}`)
+                    const response = await axios.delete(`https://docxserver.onrender.com/api/notifications/${notificationId}`)
                     if (response.data.status === "success") {
                         getNotifications()
                         setBtnDis(false)
@@ -114,7 +114,7 @@ const Notifications = () => {
 
     const declineHandler = (notificationId) => {
         async function declineRequest() {
-            const response = await axios.delete(`/api/notifications/${notificationId}`)
+            const response = await axios.delete(`https://docxserver.onrender.com/api/notifications/${notificationId}`)
 
             if (response.data.status === "success") {
                 getNotifications()

@@ -17,7 +17,7 @@ const ManageDoc = (props) => {
     const [loading, setLoading] = useState(true)
 
     async function getInitialStates() {
-        const response = await axios.get(`/api/docs/populated/${id}`)
+        const response = await axios.get(`https://docxserver.onrender.com/api/docs/populated/${id}`)
 
         setTitle(response.data.data.doc.name)
         setCollaborators(response.data.data.doc.collaborators)
@@ -44,7 +44,7 @@ const ManageDoc = (props) => {
     const updateNameHandler = (inputTerm) => {
         async function updateName() {
             try {
-                await axios.patch(`/api/docs/${id}`, {
+                await axios.patch(`https://docxserver.onrender.com/api/docs/${id}`, {
                     name: inputTerm
                 })
 
@@ -75,7 +75,7 @@ const ManageDoc = (props) => {
             try {
                 //console.log(collaborator)
                 const response = await axios.patch(
-                    `/api/docs/${id}/removeCollaborator`,
+                    `https://docxserver.onrender.com/api/docs/${id}/removeCollaborator`,
                     { collabId: collaborator._id }
                 )
 

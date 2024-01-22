@@ -4,11 +4,18 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 const path = require('path')
+const cors = require('cors')
 
 const socketio = require('socket.io')
 const http = require('http')
 const server = http.createServer(app)
 const io = socketio(server)
+
+app.use(
+    cors({
+        origin:"https://65aea5cdc0647329c0e16c82--timely-syrniki-082ef4.netlify.app/"
+})
+)
 
 io.on('connection', (socket) => {
     //console.log("User Connected...")
