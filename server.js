@@ -13,7 +13,7 @@ const io = socketio(server)
 
 app.use(
     cors({
-        origin:"https://65aea5cdc0647329c0e16c82--timely-syrniki-082ef4.netlify.app/"
+        origin:"http://localhost:3000/"
 })
 )
 
@@ -43,9 +43,6 @@ const { signup, login, protect, isOwnerOrCollaborator, isLoggedIn, logout, accep
 
 
 const DB = process.env.DB;
-
-// mongoose.connect('mongodb://localhost/test-db', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-//     .then(() => console.log('DB connection successful!'))
 
 mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => console.log('DB connection successful!'))
