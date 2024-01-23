@@ -42,7 +42,7 @@ const Signup = () => {
         <div className="center" >
 
 
-            <h1>Login</h1>
+            <h1>Welcome to DOCXEditor<br/> Login</h1>
 
             {
                 loggedIn ? <Redirect to="/dashboard" /> : null

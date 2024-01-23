@@ -50,7 +50,7 @@ const Signup = () => {
         <div className="center" >
 
 
-            <h1>Signup</h1>
+            <h1>Welcome to DOCXEditor<br/>Signup</h1>
 
             {
                 loggedIn ? <Redirect to="/dashboard" /> : null

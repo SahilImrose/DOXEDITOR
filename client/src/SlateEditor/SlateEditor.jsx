@@ -13,7 +13,6 @@ import {
   Element as SlateElement,
 } from "slate";
 import { Slate, Editable, withReact, useSlate } from "slate-react";
-import Elements from "./Elements";
 import "./SlateEditor.css";
 import Leaf from "./Leaf";
 import Button from "./Buttons/Button";
@@ -46,20 +45,53 @@ const SlateEditor = (props) => {
 
   const [saved, setSaved] = useState();
 
-  const docValue = [
-    {
-      type: "paragraph",
-      children: [
-        {
-          text: `${localStorage.getItem("paragraphs")}`,
-        }
-      ],
-    },
-  ];
   const { loggedIn } = useContext(AuthContext);
 
   const id = useRef(Date.now().toString() + "::UID");
 
+  const saveDocHandler = (value) => {
+    async function saveDoc() {
+      try {
+        await axios.patch(`/api/docs/${docId}`, {
+          content: value,
+        });
+
+        setSaved(true);
+      } catch (err) {
+        setErrorStatus(err.response.status);
+        setErrorMessage(err.response.data.message);
+      }
+    }
+
+    saveDoc();
+  };
+
+useEffect(() => {
+  let importedDoc;
+  if (localStorage.getItem("paragraphs")) {
+    const paragraphs = localStorage.getItem("paragraphs")
+
+    importedDoc = [
+      {
+          "type": "paragraph",
+          "children": [
+              {
+                  "text": `${paragraphs}`
+              }
+          ]
+      }
+  ]
+  setValue(importedDoc)
+
+  saveDocHandler()
+  setTimeout(() => {
+    localStorage.removeItem("paragraphs")
+    localStorage.removeItem("title")
+    document.getElementById("save").click()
+  }, 5000);
+  }
+
+}, [docId])
   useEffect(() => {
     if (loggedIn) {
       if (!idCopy) {
@@ -68,14 +100,7 @@ const SlateEditor = (props) => {
         async function getSingleDoc() {
           try {
             const doc = await axios.get(`/api/docs/${docId}`);
-
-            if (localStorage.getItem("title")) {
-              setValue(docValue);
-              setTimeout(() => {
-                localStorage.removeItem("title","paragraphs")
-              }, 1000);
-            }else{
-
+            if (!localStorage.getItem("paragraphs")) {
               setValue(doc.data.data.doc.content);
             }
             setTitle(doc.data.data.doc.name);
@@ -108,37 +133,9 @@ const SlateEditor = (props) => {
     }
   }, [docId]);
 
-  const renderElement = useCallback((props) => {
-    if (props.element.type === "heading-one") {
-      return <Elements {...props} />;
-    }
-    if (props.element.type === "heading-two") {
-      return <Elements {...props} />;
-    } else {
-      return <Elements {...props} />;
-    }
-  }, []);
-
   const renderLeaf = useCallback((props) => {
     return <Leaf {...props} />;
   }, []);
-
-  const saveDocHandler = (value) => {
-    async function saveDoc() {
-      try {
-        await axios.patch(`/api/docs/${docId}`, {
-          content: value,
-        });
-
-        setSaved(true);
-      } catch (err) {
-        setErrorStatus(err.response.status);
-        setErrorMessage(err.response.data.message);
-      }
-    }
-
-    saveDoc();
-  };
 
   return (
     <div className="base-div">
@@ -176,6 +173,7 @@ const SlateEditor = (props) => {
           disabled={!value}
           className="save-button"
           onClick={() => saveDocHandler(value)}
+          id="save"
         >
           <span className="material-icons">save</span>
         </button>
@@ -281,58 +279,9 @@ const SlateEditor = (props) => {
             timer={timer}
             setTimer={setTimer}
           />
-
-          <BlockButton
-            format="heading-one"
-            icon="looks_one"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
-
-          <BlockButton
-            format="heading-two"
-            icon="looks_two"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
-
-          <BlockButton
-            format="left"
-            icon="format_align_left"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
-
-          <BlockButton
-            format="center"
-            icon="format_align_center"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
-
-          <BlockButton
-            format="right"
-            icon="format_align_right"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
-
-          <BlockButton
-            format="justify"
-            icon="format_align_justify"
-            saveDoc={saveDocHandler}
-            timer={timer}
-            setTimer={setTimer}
-          />
         </div>
 
         <Editable
-          renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyUp={() => {
             if (timer) {
