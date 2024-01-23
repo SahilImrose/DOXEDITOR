@@ -7,7 +7,7 @@ const LogoutButton = () => {
     const { getLoggedInState } = useContext(AuthContext)
 
     async function logout() {
-        await axios.get('https://docxserver.onrender.com/api/users/logout')
+        await axios.get('/api/users/logout')
         getLoggedInState()
         window.location.reload()
     }

@@ -11,12 +11,9 @@ const http = require('http')
 const server = http.createServer(app)
 const io = socketio(server)
 
-app.use(
-    cors({
-        origin:"http://localhost:3000/"
-})
-)
 
+
+app.use(express.static('./client/build'))
 io.on('connection', (socket) => {
     //console.log("User Connected...")
 

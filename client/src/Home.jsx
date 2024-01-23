@@ -72,7 +72,7 @@ const Home = (props) => {
        reader.readAsBinaryString(file);
        async function createNewDoc() {
         try {
-            const newDoc = await axios.post('https://docxserver.onrender.com/api/docs', {
+            const newDoc = await axios.post('/api/docs', {
                 name: `${localStorage.getItem("title")}`
             }, { withCredentials: true })
 
@@ -106,7 +106,7 @@ const Home = (props) => {
     const clickHandler = async () => {
         async function createNewDoc() {
             try {
-                const newDoc = await axios.post('https://docxserver.onrender.com/api/docs', {
+                const newDoc = await axios.post('/api/docs', {
                     name: title
                 }, { withCredentials: true })
 
@@ -134,7 +134,7 @@ const Home = (props) => {
     }
 
     async function getAllDocs() {
-        const docs = await axios.get('https://docxserver.onrender.com/api/docs')
+        const docs = await axios.get('/api/docs')
 
         setDocs(docs.data.data.docs)
         setLoading(false)
@@ -155,7 +155,7 @@ const Home = (props) => {
 
     const deleteDocHandler = async (id) => {
         try {
-            await axios.delete(`https://docxserver.onrender.com/api/docs/${id}`)
+            await axios.delete(`/api/docs/${id}`)
 
             // props.history.push({
             //     pathname: "/delete"

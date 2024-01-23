@@ -24,7 +24,7 @@ const Signup = () => {
         }
 
         try {
-            await axios.post("https://docxserver.onrender.com/api/users/login", loginData)
+            await axios.post("/api/users/login", loginData)
 
             getLoggedInState()
             history.push("/dashboard")

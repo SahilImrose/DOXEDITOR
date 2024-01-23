@@ -126,7 +126,7 @@ const SlateEditor = (props) => {
   const saveDocHandler = (value) => {
     async function saveDoc() {
       try {
-        await axios.patch(`https://docxserver.onrender.com/api/docs/${docId}`, {
+        await axios.patch(`/api/docs/${docId}`, {
           content: value,
         });
 

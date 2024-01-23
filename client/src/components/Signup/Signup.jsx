@@ -30,7 +30,7 @@ const Signup = () => {
         }
 
         try {
-            await axios.post("https://docxserver.onrender.com/api/users/signup", signupData)
+            await axios.post("/api/users/signup", signupData)
 
             history.push({
                 pathname: '/login'

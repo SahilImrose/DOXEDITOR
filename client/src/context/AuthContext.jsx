@@ -66,7 +66,7 @@ const AuthContextProvider = (props) => {
     })
 
     async function getLoggedInState() {
-        const response = await axios.get('https://docxserver.onrender.com/api/users/isLoggedIn', { withCredentials: true })
+        const response = await axios.get('/api/users/isLoggedIn', { withCredentials: true })
         setLoggedIn(response.data.loggedIn)
         setCurrentUser(response.data.user)
 
